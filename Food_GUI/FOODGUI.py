@@ -4,6 +4,9 @@ import os
 from socket import *
 import socket
 import tkinter.messagebox
+from tkcalendar import Calendar, DateEntry
+from datetime import datetime
+from datetime import timedelta
 
 
 def delete0():
@@ -31,9 +34,8 @@ def admin_main_interface():
     Foodbrand = StringVar()
     Foodtype = StringVar()
     Foodnumber = StringVar()
-    Unit = StringVar()
-    StorageType = StringVar()
     ExpiryDate = StringVar()
+    ShipDate = StringVar()
 
     # ========================Functions========
     def update():
@@ -45,9 +47,9 @@ def admin_main_interface():
         brandstring = screen9.txtFoodbrand.get()
         typestring = screen9.txtFoodtype.get()
         numberstring = screen9.txtFoodnumber.get()
-        unitstring = screen9.txtunit.get()
-        storagestring = screen9.txtstoragetype.get()
         expirystring = screen9.txtexpirydate.get()
+        message = "u+" + idstring + "+" + namestring + "+" + brandstring + "+" + typestring + "+" + numberstring + "+" + expirystring
+        '''
         client.send("u+".encode())
         client.send(idstring.encode())
         client.send("+".encode())
@@ -59,11 +61,9 @@ def admin_main_interface():
         client.send("+".encode())
         client.send(numberstring.encode())
         client.send("+".encode())
-        client.send(unitstring.encode())
-        client.send("+".encode())
-        client.send(storagestring.encode())
-        client.send("+".encode())
         client.send(expirystring.encode())
+        '''
+        client.send(message.encode())
         from_server = client.recv(4096).decode()
 
         client.close()
@@ -81,9 +81,9 @@ def admin_main_interface():
         brandstring = screen9.txtFoodbrand.get()
         typestring = screen9.txtFoodtype.get()
         numberstring = screen9.txtFoodnumber.get()
-        unitstring = screen9.txtunit.get()
-        storagestring = screen9.txtstoragetype.get()
         expirystring = screen9.txtexpirydate.get()
+        message = "a+" + idstring + "+" + namestring + "+" + brandstring + "+" + typestring + "+" + numberstring + "+" + expirystring
+        '''
         client.send("a+".encode())
         client.send(idstring.encode())
         client.send("+".encode())
@@ -100,6 +100,8 @@ def admin_main_interface():
         client.send(storagestring.encode())
         client.send("+".encode())
         client.send(expirystring.encode())
+        '''
+        client.send(message.encode())
 
         client.close()
 
@@ -125,10 +127,10 @@ def admin_main_interface():
         brandstring = screen9.txtFoodbrand.get()
         typestring = screen9.txtFoodtype.get()
         numberstring = screen9.txtFoodnumber.get()
-        unitstring = screen9.txtunit.get()
-        storagestring = screen9.txtstoragetype.get()
         expirystring = screen9.txtexpirydate.get()
-        client.send("e+".encode())
+        message = "e+" + idstring + "+" + namestring + "+" + brandstring + "+" + typestring + "+" + numberstring + "+" + expirystring
+        '''
+        client.send("t+".encode())
         client.send(idstring.encode())
         client.send("+".encode())
         client.send(namestring.encode())
@@ -144,6 +146,8 @@ def admin_main_interface():
         client.send(storagestring.encode())
         client.send("+".encode())
         client.send(expirystring.encode())
+        '''
+        client.send(message.encode())
         from_server = client.recv(4096).decode()
 
         client.close()
@@ -161,9 +165,9 @@ def admin_main_interface():
         brandstring = screen9.txtFoodbrand.get()
         typestring = screen9.txtFoodtype.get()
         numberstring = screen9.txtFoodnumber.get()
-        unitstring = screen9.txtunit.get()
-        storagestring = screen9.txtstoragetype.get()
         expirystring = screen9.txtexpirydate.get()
+        message = "s+++" + brandstring + "+++"
+        '''
         client.send("s+".encode())
         client.send(idstring.encode())
         client.send("+".encode())
@@ -180,6 +184,8 @@ def admin_main_interface():
         client.send(storagestring.encode())
         client.send("+".encode())
         client.send(expirystring.encode())
+        '''
+        client.send(message.encode())
         from_server = client.recv(4096).decode()
 
         client.close()
@@ -197,9 +203,9 @@ def admin_main_interface():
         brandstring = screen9.txtFoodbrand.get()
         typestring = screen9.txtFoodtype.get()
         numberstring = screen9.txtFoodnumber.get()
-        unitstring = screen9.txtunit.get()
-        storagestring = screen9.txtstoragetype.get()
         expirystring = screen9.txtexpirydate.get()
+        message = "t++++" + typestring + "++"
+        '''
         client.send("t+".encode())
         client.send(idstring.encode())
         client.send("+".encode())
@@ -216,6 +222,8 @@ def admin_main_interface():
         client.send(storagestring.encode())
         client.send("+".encode())
         client.send(expirystring.encode())
+        '''
+        client.send(message.encode())
         from_server = client.recv(4096).decode()
 
         client.close()
@@ -285,24 +293,16 @@ def admin_main_interface():
     screen9.lblFoodnumber.grid(row=4, column=0, sticky=W)
     screen9.txtFoodnumber = Entry(DataFrameLEFT, font=('arial', 20, 'bold'), textvariable=Foodnumber, width=39)
     screen9.txtFoodnumber.grid(row=4, column=1)
-
-    screen9.lblunit = Label(DataFrameLEFT, font=('arial', 20, 'bold'), text="Unit:", padx=2, pady=2,
-                            bg="Ghost White")
-    screen9.lblunit.grid(row=5, column=0, sticky=W)
-    screen9.txtunit = Entry(DataFrameLEFT, font=('arial', 20, 'bold'), textvariable=Unit, width=39)
-    screen9.txtunit.grid(row=5, column=1)
-
-    screen9.lblstoragetype = Label(DataFrameLEFT, font=('arial', 20, 'bold'), text="Type of Storage:", padx=2, pady=2,
-                                   bg="Ghost White")
-    screen9.lblstoragetype.grid(row=6, column=0, sticky=W)
-    screen9.txtstoragetype = Entry(DataFrameLEFT, font=('arial', 20, 'bold'), textvariable=StorageType, width=39)
-    screen9.txtstoragetype.grid(row=6, column=1)
-
+    screen9.lblshipdate = Label(DataFrameLEFT, font=('arial', 20, 'bold'), text="Date of Shipment:", padx=2, pady=2,
+                                bg="Ghost White")
+    screen9.lblshipdate.grid(row=5, column=0, sticky=W)
+    screen9.txtshipdate = DateEntry(DataFrameLEFT, font=('arial', 20, 'bold'), textvariable=ShipDate, width=39)
+    screen9.txtshipdate.grid(row=5, column=1)
     screen9.lblexpirydate = Label(DataFrameLEFT, font=('arial', 20, 'bold'), text="Date of Expiry:", padx=2, pady=2,
                                   bg="Ghost White")
-    screen9.lblexpirydate.grid(row=7, column=0, sticky=W)
+    screen9.lblexpirydate.grid(row=6, column=0, sticky=W)
     screen9.txtexpirydate = Entry(DataFrameLEFT, font=('arial', 20, 'bold'), textvariable=ExpiryDate, width=39)
-    screen9.txtexpirydate.grid(row=7, column=1)
+    screen9.txtexpirydate.grid(row=6, column=1)
     # =======================================ListBox & ScrollBar Widget===========================
     scrollbar = Scrollbar(DataFrameRight)
     scrollbar.grid(row=0, column=1, sticky='ns')
@@ -351,8 +351,7 @@ def user_main_interface():
     Foodbrand = StringVar()
     Foodtype = StringVar()
     Foodnumber = StringVar()
-    Unit = StringVar()
-    StorageType = StringVar()
+    ShipDate = StringVar()
     ExpiryDate = StringVar()
 
     # ===========Function==================
@@ -366,9 +365,9 @@ def user_main_interface():
         brandstring = screen8.txtFoodbrand.get()
         typestring = screen8.txtFoodtype.get()
         numberstring = screen8.txtFoodnumber.get()
-        unitstring = screen8.txtunit.get()
-        storagestring = screen8.txtstoragetype.get()
         expirystring = screen8.txtexpirydate.get()
+        message = "a+" + idstring + "+" + namestring + "+" + brandstring + "+" + typestring + "+" + numberstring + "+" + expirystring
+        '''
         client.send("a+".encode())
         client.send(idstring.encode())
         client.send("+".encode())
@@ -385,7 +384,8 @@ def user_main_interface():
         client.send(storagestring.encode())
         client.send("+".encode())
         client.send(expirystring.encode())
-
+        '''
+        client.send(message.encode())
         client.close()
 
     def Display():
@@ -410,9 +410,10 @@ def user_main_interface():
         brandstring = screen8.txtFoodbrand.get()
         typestring = screen8.txtFoodtype.get()
         numberstring = screen8.txtFoodnumber.get()
-        unitstring = screen8.txtunit.get()
-        storagestring = screen8.txtstoragetype.get()
+
         expirystring = screen8.txtexpirydate.get()
+        message = "e+" + idstring + "+" + namestring + "+" + brandstring + "+" + typestring + "+" + numberstring + "+" + expirystring
+        '''
         client.send("e+".encode())
         client.send(idstring.encode())
         client.send("+".encode())
@@ -429,6 +430,8 @@ def user_main_interface():
         client.send(storagestring.encode())
         client.send("+".encode())
         client.send(expirystring.encode())
+        '''
+        client.send(message.encode())
         from_server = client.recv(4096).decode()
 
         client.close()
@@ -446,9 +449,10 @@ def user_main_interface():
         brandstring = screen8.txtFoodbrand.get()
         typestring = screen8.txtFoodtype.get()
         numberstring = screen8.txtFoodnumber.get()
-        unitstring = screen8.txtunit.get()
-        storagestring = screen8.txtstoragetype.get()
+
         expirystring = screen8.txtexpirydate.get()
+        message = "s+++" + brandstring + "+++"
+        '''
         client.send("s+".encode())
         client.send(idstring.encode())
         client.send("+".encode())
@@ -465,8 +469,9 @@ def user_main_interface():
         client.send(storagestring.encode())
         client.send("+".encode())
         client.send(expirystring.encode())
+        '''
+        client.send(message.encode())
         from_server = client.recv(4096).decode()
-
         client.close()
         print(from_server)
         x = from_server.split('\n')
@@ -482,9 +487,10 @@ def user_main_interface():
         brandstring = screen8.txtFoodbrand.get()
         typestring = screen8.txtFoodtype.get()
         numberstring = screen8.txtFoodnumber.get()
-        unitstring = screen8.txtunit.get()
-        storagestring = screen8.txtstoragetype.get()
+
         expirystring = screen8.txtexpirydate.get()
+        message = "t++++" + typestring + "++"
+        '''
         client.send("t+".encode())
         client.send(idstring.encode())
         client.send("+".encode())
@@ -501,6 +507,8 @@ def user_main_interface():
         client.send(storagestring.encode())
         client.send("+".encode())
         client.send(expirystring.encode())
+        '''
+        client.send(message.encode())
         from_server = client.recv(4096).decode()
         client.close()
         print(from_server)
@@ -514,6 +522,14 @@ def user_main_interface():
             screen8.destroy()
             return
 
+    def callback():
+        if Foodtype.get() == "Refrigerated":
+            screen8.txtexpirydate.insert(0, screen8.txtshipdate.get_date() + timedelta(days=365))
+        elif Foodtype.get() == "Room":
+            screen8.txtexpirydate.insert(0, screen8.txtshipdate.get_date() + timedelta(days=30))
+        elif Foodtype.get() == "Frozen":
+            screen8.txtexpirydate.insert(0, screen8.txtshipdate.get_date() + timedelta(days=730))
+        return 0
     # ===========Frames====================
     MainFrame = Frame(screen8, bg="cadet blue")
     MainFrame.grid()
@@ -561,7 +577,8 @@ def user_main_interface():
     screen8.lblFoodtype = Label(DataFrameLEFT, font=('arial', 20, 'bold'), text="Food type:", padx=2, pady=2,
                                 bg="Ghost White")
     screen8.lblFoodtype.grid(row=3, column=0, sticky=W)
-    screen8.txtFoodtype = Entry(DataFrameLEFT, font=('arial', 20, 'bold'), textvariable=Foodtype, width=39)
+    screen8.txtFoodtype = Entry(DataFrameLEFT, font=('arial', 20, 'bold'), textvariable=Foodtype, validate="focusout",
+                                validatecommand=callback, width=39)
     screen8.txtFoodtype.grid(row=3, column=1)
 
     screen8.lblFoodnumber = Label(DataFrameLEFT, font=('arial', 20, 'bold'), text="Food quantity:", padx=2, pady=2,
@@ -569,25 +586,20 @@ def user_main_interface():
     screen8.lblFoodnumber.grid(row=4, column=0, sticky=W)
     screen8.txtFoodnumber = Entry(DataFrameLEFT, font=('arial', 20, 'bold'), textvariable=Foodnumber, width=39)
     screen8.txtFoodnumber.grid(row=4, column=1)
-
-    screen8.lblunit = Label(DataFrameLEFT, font=('arial', 20, 'bold'), text="Unit:", padx=2, pady=2,
-                            bg="Ghost White")
-    screen8.lblunit.grid(row=5, column=0, sticky=W)
-    screen8.txtunit = Entry(DataFrameLEFT, font=('arial', 20, 'bold'), textvariable=Unit, width=39)
-    screen8.txtunit.grid(row=5, column=1)
-
-    screen8.lblstoragetype = Label(DataFrameLEFT, font=('arial', 20, 'bold'), text="Type of Storage:", padx=2, pady=2,
-                                   bg="Ghost White")
-    screen8.lblstoragetype.grid(row=6, column=0, sticky=W)
-    screen8.txtstoragetype = Entry(DataFrameLEFT, font=('arial', 20, 'bold'), textvariable=StorageType, width=39)
-    screen8.txtstoragetype.grid(row=6, column=1)
-
-    screen8.lblexpirydate = Label(DataFrameLEFT, font=('arial', 20, 'bold'), text="Date of Expiry:", padx=2, pady=2,
+    screen8.lblshipdate = Label(DataFrameLEFT, font=('arial', 20, 'bold'), text="Date of Shipment:", padx=2, pady=2,
+                                bg="Ghost White")
+    screen8.lblshipdate.grid(row=5, column=0, sticky=W)
+    screen8.txtshipdate = DateEntry(DataFrameLEFT, font=('arial', 20, 'bold'), textvariable=ShipDate, width=39)
+    screen8.txtshipdate.grid(row=5, column=1)
+    screen8.lblexpirydate = Label(DataFrameLEFT, font=('arial', 20, 'bold'), text="Date of expiration:", padx=2, pady=2,
                                   bg="Ghost White")
-    screen8.lblexpirydate.grid(row=7, column=0, sticky=W)
+    screen8.lblexpirydate.grid(row=6, column=0, sticky=W)
     screen8.txtexpirydate = Entry(DataFrameLEFT, font=('arial', 20, 'bold'), textvariable=ExpiryDate, width=39)
-    screen8.txtexpirydate.grid(row=7, column=1)
-
+    screen8.txtexpirydate.grid(row=6, column=1)
+    '''
+    if StorageType.get() == "Refrigerated":
+        ExpiryDate == screen8.txtshipdate.selection_get() + timedelta(days=4)
+    '''
     # =======================================ListBox & ScrollBar Widget===========================
     scrollbar = Scrollbar(DataFrameRight)
     scrollbar.grid(row=0, column=1, sticky='ns')

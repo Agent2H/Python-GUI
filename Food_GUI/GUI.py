@@ -1,9 +1,35 @@
-from socket import *
-import socket
+# coding:utf-8
+import tkinter as tk
+from tkinter import ttk
+from tkcalendar import calendar_, Calendar
 
-import sqlite3
-import numpy as np
+ROOT = tk.Tk()
+ROOT.withdraw()  # hide naff extra window
+ROOT.title('Please choose a date')
 
+
+def pick_date_dialog():
+    '''Display GUI date picker dialog,
+       print date selected when OK clicked'''
+
+    def print_sel():
+        selected_date = (cal.get_date())
+        print(selected_date)
+
+    top = tk.Toplevel(ROOT)
+
+    # defaults to today's date
+    cal = Calendar(top,
+                   font="Arial 10", background='darkblue',
+                   foreground='white', selectmode='day')
+
+    cal.grid()
+    ttk.Button(top, text="OK", command=print_sel).grid()
+
+
+pick_date_dialog()
+
+ROOT.mainloop()
 '''
 def client_program():
     host = socket.gethostname()  # as both code is running on same pc
@@ -28,13 +54,14 @@ def client_program():
 if __name__ == '__main__':
     client_program()
 '''
+'''
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(('127.0.0.1', 54000))
 client.send("I am CLIENT<br>".encode())
 from_server = client.recv(4096).decode()
 client.close()
 print (from_server)
-
+'''
 '''
 def viewData():
     con = sqlite3.connect("foodmanagement.db")
